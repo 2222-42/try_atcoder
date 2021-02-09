@@ -1,17 +1,13 @@
-use std::io::Read;
-// use proconio::input;
+// use std::io::Read;
+use proconio::input;
 
 fn main() {
-    let mut buf = String::new();
-
-    std::io::stdin().read_to_string(&mut buf).unwrap();
-
-    let mut iter = buf.split_whitespace();
-
-    let v: usize = iter.next().unwrap().parse().unwrap();
-    let t: usize = iter.next().unwrap().parse().unwrap();
-    let s: usize = iter.next().unwrap().parse().unwrap();
-    let d: usize = iter.next().unwrap().parse().unwrap();
+    input! {
+        v: u32,
+        t: u32,
+        s: u32,
+        d: u32,
+    }
 
     let min = v * t;
     let max = v * s;
