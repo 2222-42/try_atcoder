@@ -147,33 +147,29 @@ fn main() {
         while k < n {
             if k != j {
                 let result = shortest_path(&graph, j, k);
-                match result {
-                    Some(n) => sub_answers[k] = n,
-                    None => sub_answers[k] = 0,
+                let sa = match result {
+                    Some(n) => n,
+                    None => 0,
+                };
+
+                if sa != 0 {
+                    let result = shortest_path(&graph, k, j);
+                    match result {
+                        Some(n) => sub_answers[k] = sa + n,
+                        None => sub_answers[k] = 0,
+                    }
                 }
             }
             k += 1;
         }
 
-        let mut k = 0;
-        while k < n {
-            let sa = sub_answers[k];
-            if sa != 0 {
-                let result = shortest_path(&graph, k, j);
-                match result {
-                    Some(n) => sub_answers[k] = sa + n,
-                    None => sub_answers[k] = 0,
-                }
-            }
-            k += 1;
-        }
+        // let filtered_sub_answers: Vec<usize> =
+        //     sub_answers.iter().filter(|&&x| x != 0).cloned().collect();
 
-        let filtered_sub_answers: Vec<usize> =
-            sub_answers.iter().filter(|&&x| x != 0).cloned().collect();
-
-        let answer = filtered_sub_answers.into_iter().min();
-        match answer {
-            Some(n) => answers[j] = n,
+        // let answer = filtered_sub_answers.into_iter().min();
+        let answer_j = sub_answers.iter().filter(|&&x| x != 0).min();
+        match answer_j {
+            Some(n) => answers[j] = *n,
             None => answers[j] = 0,
         }
 
